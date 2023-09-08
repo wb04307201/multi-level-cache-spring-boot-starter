@@ -6,12 +6,13 @@ import redis.clients.jedis.util.Pool;
 
 import java.util.concurrent.Callable;
 
-public class RedisCache implements Cache {
+public class RedisPoolCache implements Cache {
 
     private final String name;
     private final Pool<Jedis> pool;
 
-    public RedisCache(String name, Pool<Jedis> pool) {
+
+    public RedisPoolCache(String name, Pool<Jedis> pool) {
         this.name = name;
         this.pool = pool;
     }

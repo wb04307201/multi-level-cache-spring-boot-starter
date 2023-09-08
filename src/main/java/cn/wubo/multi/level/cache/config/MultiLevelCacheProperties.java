@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@ConfigurationProperties(prefix = "index.cache.redis")
+@ConfigurationProperties(prefix = "multi.level")
 public class MultiLevelCacheProperties {
     private List<CacheProperties> caches = new ArrayList<>();
 }
