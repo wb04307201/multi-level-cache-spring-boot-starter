@@ -11,6 +11,10 @@ public class CacheProperties {
      */
     private String cacheName;
     /**
+     * multilevel caffeine redis redis-cluster redis-sentinel
+     */
+    private String cachetype = "caffeine";
+    /**
      * 过期类型（none,ttl,tti）
      */
     private String expirytype;
@@ -20,14 +24,18 @@ public class CacheProperties {
      */
     private Long expirytime;
 
-    private CaffeineProperties caffeine;
+    private CaffeineProperties caffeine = new CaffeineProperties();
 
-    private RedisProperties redis;
+    private RedisProperties redis = new RedisProperties();;
+
+    private List<String> level;
+
+    Boolean allowNullValues = Boolean.TRUE;
 
     @Data
     public class CaffeineProperties {
         // 是否开启异步
-        private Boolean async = Boolean.FALSE;
+        //private Boolean async = Boolean.FALSE;
         // 基于缓存内的元素个数进行驱逐，设置为0L则不启用
         private Long maximumSize = 10_000L;
         // 基于缓存内元素权重进行驱逐，设置为0L则不启用
@@ -41,7 +49,7 @@ public class CacheProperties {
         // 单例地址
         private String host;
         // 单例端口路
-        private String port;
+        private Integer port = 6379;
         // 密码
         private String password;
         // 数据库
@@ -65,12 +73,15 @@ public class CacheProperties {
         @Data
         public class ClusterProperties {
             private List<String> nodes;
+            // 出现异常最大重试次数
+            private Integer maxAttempts = 5;
         }
 
         @Data
         public class SentinelProperties {
             private List<String> nodes;
             private String masterName;
+            private String user;
         }
     }
 }
