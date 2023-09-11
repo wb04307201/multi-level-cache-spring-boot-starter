@@ -4,6 +4,8 @@
 > 可配置多个caffeine本地缓存和redis缓存服务，并可以串联多个缓存配置形成多级缓存  
 > 与spring-cache相结合，支持@Caching、@Cacheable、@CacahePut、@CacheEvict等注解的使用
 
+## [代码示例](https://gitee.com/wb04307201/multi-level-cache-demo)
+
 ```yaml
 multi:
   level:
