@@ -14,6 +14,8 @@ import java.util.concurrent.Callable;
 public abstract class AbstractRedisCache extends AbstractValueAdaptingCache {
     protected final CacheProperties cacheProperties;
 
+    protected static final Long MAX_EXPIRY_TIME = 3153600000L;
+
     /**
      * Create an {@code AbstractValueAdaptingCache} with the given setting.
      *
@@ -69,18 +71,18 @@ public abstract class AbstractRedisCache extends AbstractValueAdaptingCache {
     }
 
     protected void getLog(Object key) {
-        log.debug("开始获取缓存值 缓存名：{} 缓存key：{}", getName(), key);
+        log.debug("开始获取缓存值 缓存名：{} 缓存类型：{} 缓存key：{}", getName(), cacheProperties.getCachetype(), key);
     }
 
     protected void getLog(Object key, Object value) {
-        log.debug("获取到缓存值 缓存名：{} 缓存key：{} 缓存value:{}", getName(), key, value);
+        log.debug("获取到缓存值 缓存名：{} 缓存类型：{} 缓存key：{} 缓存value:{}", getName(), cacheProperties.getCachetype(), key, value);
     }
 
     protected void putLog(Object key, Object value) {
-        log.debug("写入缓存值 缓存名：{} 缓存key：{} 缓存value:{}", getName(), key, value);
+        log.debug("写入缓存值 缓存名：{} 缓存类型：{} 缓存key：{} 缓存value:{}", getName(), cacheProperties.getCachetype(), key, value);
     }
 
     protected void buildLog(Object key, Object value) {
-        log.debug("未找到缓存值 缓存名：{} 缓存key：{} 生成缓存value：{}", getName(), key, value);
+        log.debug("未找到缓存值 缓存名：{} 缓存类型：{} 缓存key：{} 生成缓存value：{}", getName(), cacheProperties.getCachetype(), key, value);
     }
 }

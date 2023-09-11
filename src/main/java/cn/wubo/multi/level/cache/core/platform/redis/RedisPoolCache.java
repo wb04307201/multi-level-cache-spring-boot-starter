@@ -23,7 +23,7 @@ public class RedisPoolCache extends AbstractRedisCache {
         poolConfig.setMaxIdle(cacheProperties.getRedis().getMaxIdle());
         poolConfig.setMinIdle(cacheProperties.getRedis().getMinIdle());
         poolConfig.setMaxWait(Duration.ofMillis(cacheProperties.getRedis().getMaxWait()));
-        if (cacheProperties.getRedis().getSentinel() != null)
+        if ("redis-sentinel".equals(cacheProperties.getExpirytype()))
             this.pool = new JedisSentinelPool(cacheProperties.getRedis().getSentinel().getMasterName(), new HashSet<>(cacheProperties.getRedis().getSentinel().getNodes()), poolConfig, cacheProperties.getRedis().getTimeout(), cacheProperties.getRedis().getSentinel().getUser(), cacheProperties.getRedis().getPassword(), cacheProperties.getRedis().getDatabase());
         else
             this.pool = new JedisPool(poolConfig, cacheProperties.getRedis().getHost(), cacheProperties.getRedis().getPort(), cacheProperties.getRedis().getTimeout(), cacheProperties.getRedis().getPassword(), cacheProperties.getRedis().getDatabase());
@@ -34,11 +34,12 @@ public class RedisPoolCache extends AbstractRedisCache {
         getLog(key);
         try (Jedis jedis = pool.getResource()) {
             String keyStr = getKey(key);
-            String value = jedis.get(keyStr);
-            if ("tti".equals(cacheProperties.getExpirytype()) && value != null)
+            byte[] temp = jedis.get(serialize(keyStr));
+            if ("tti".equals(cacheProperties.getExpirytype()) && temp != null)
                 jedis.expire(keyStr, cacheProperties.getExpirytime());
+            Object value = temp == null ? null : deserializer(temp);
             getLog(key, value);
-            return value == null ? null : deserializer(value.getBytes());
+            return value;
         }
     }
 
@@ -71,6 +72,7 @@ public class RedisPoolCache extends AbstractRedisCache {
                 jedis.set(serialize(getKey(key)), serialize(cacheValue));
                 if ("ttl".equals(cacheProperties.getExpirytype()) || "tti".equals(cacheProperties.getExpirytype()))
                     jedis.expire(getKey(key), cacheProperties.getExpirytime());
+                else jedis.expire(getKey(key), MAX_EXPIRY_TIME);
             }
         }
     }

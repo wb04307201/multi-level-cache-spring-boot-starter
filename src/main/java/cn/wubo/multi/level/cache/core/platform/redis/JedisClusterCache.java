@@ -34,11 +34,12 @@ public class JedisClusterCache extends AbstractRedisCache {
     protected Object lookup(Object key) {
         getLog(key);
         String keyStr = getKey(key);
-        String value = cluster.get(keyStr);
-        if ("tti".equals(cacheProperties.getExpirytype()) && value != null)
+        byte[] temp = cluster.get(serialize(keyStr));
+        if ("tti".equals(cacheProperties.getExpirytype()) && temp != null)
             cluster.expire(keyStr, cacheProperties.getExpirytime());
+        Object value = temp == null ? null : deserializer(temp);
         getLog(key, value);
-        return value == null ? null : deserializer(value.getBytes());
+        return value;
     }
 
     @Override
@@ -69,6 +70,7 @@ public class JedisClusterCache extends AbstractRedisCache {
             cluster.set(serialize(getKey(key)), serialize(cacheValue));
             if ("ttl".equals(cacheProperties.getExpirytype()) || "tti".equals(cacheProperties.getExpirytype()))
                 cluster.expire(getKey(key), cacheProperties.getExpirytime());
+            else cluster.expire(getKey(key), MAX_EXPIRY_TIME);
         }
     }
 

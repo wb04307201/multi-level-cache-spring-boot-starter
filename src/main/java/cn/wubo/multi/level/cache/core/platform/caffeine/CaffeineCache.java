@@ -18,7 +18,7 @@ public class CaffeineCache extends AbstractRedisCache {
             caffeine.maximumSize(cacheProperties.getCaffeine().getMaximumSize());
         if (cacheProperties.getCaffeine().getMaximumWeight() > 0)
             caffeine.maximumWeight(cacheProperties.getCaffeine().getMaximumWeight());
-        if (cacheProperties.getCaffeine().getRecordStats()) caffeine.recordStats();
+        if (Boolean.TRUE.equals(cacheProperties.getCaffeine().getRecordStats())) caffeine.recordStats();
         switch (cacheProperties.getExpirytype()) {
             case "ttl":
                 caffeine.expireAfterWrite(Duration.ofSeconds(cacheProperties.getExpirytime()));
@@ -27,7 +27,9 @@ public class CaffeineCache extends AbstractRedisCache {
                 caffeine.expireAfterAccess(Duration.ofSeconds(cacheProperties.getExpirytime()));
                 break;
             case "none":
+                break;
             default:
+                throw new IllegalArgumentException("expirytype is Illegal!");
         }
         this.cache = caffeine.build();
     }
