@@ -17,7 +17,7 @@ public class CacheProperties {
     /**
      * 过期类型（none,ttl,tti）
      */
-    private String expirytype;
+    private String expirytype = "none";
 
     /**
      * 过期时间（秒）
