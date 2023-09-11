@@ -26,7 +26,7 @@ public class CacheProperties {
 
     private CaffeineProperties caffeine = new CaffeineProperties();
 
-    private RedisProperties redis = new RedisProperties();;
+    private RedisProperties redis = new RedisProperties();
 
     private List<String> level;
 
