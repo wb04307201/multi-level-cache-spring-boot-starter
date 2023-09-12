@@ -29,7 +29,7 @@ public class LevelCache extends AbstractRedisCache {
             if (result != null) value = result.get();
             if (value != null) break;
         }
-        for (int i = ((num + 1 != this.caches.size()) ? (num - 1) : -1); i >= 0; i--) {
+        for (int i = num < this.caches.size() ? num - 1 : -1; i >= 0; i--) {
             caches.get(i).put(key, value);
         }
         getLog(key, value);
