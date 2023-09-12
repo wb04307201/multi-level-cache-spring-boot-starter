@@ -32,14 +32,15 @@ public class RedisPoolCache extends AbstractRedisCache {
 
     @Override
     protected Object lookup(Object key) {
-        getLog(key);
+        String keyStr = getKey(key);
+        getLog(keyStr);
         try (Jedis jedis = pool.getResource()) {
-            String keyStr = getKey(key);
-            byte[] temp = jedis.get(serialize(keyStr));
+            byte[] keyByte = serialize(keyStr);
+            byte[] temp = jedis.get(keyByte);
             if ("tti".equals(cacheProperties.getExpirytype()) && temp != null)
-                jedis.expire(keyStr, cacheProperties.getExpirytime());
+                jedis.expire(keyByte, cacheProperties.getExpirytime());
             Object value = temp == null ? null : deserializer(temp);
-            getLog(key, value);
+            getLog(keyStr, value);
             return value;
         }
     }
@@ -64,16 +65,18 @@ public class RedisPoolCache extends AbstractRedisCache {
 
     @Override
     public void put(Object key, Object value) {
-        putLog(key, value);
+        String keyStr = getKey(key);
+        putLog(keyStr, value);
         Object cacheValue = preProcessCacheValue(value);
         if (!isAllowNullValues() && cacheValue == null) {
             throw new IllegalArgumentException(String.format("Cache '%s' does not allow 'null' values. Avoid storing null via '@Cacheable(unless=\"#result == null\")' or configure RedisCache to allow 'null' via RedisCacheConfiguration.", getName()));
         } else {
             try (Jedis jedis = pool.getResource()) {
-                jedis.set(serialize(getKey(key)), serialize(cacheValue));
+                byte[] keyByte = serialize(keyStr);
+                jedis.set(keyByte, serialize(cacheValue));
                 if ("ttl".equals(cacheProperties.getExpirytype()) || "tti".equals(cacheProperties.getExpirytype()))
-                    jedis.expire(getKey(key), cacheProperties.getExpirytime());
-                else jedis.expire(getKey(key), MAX_EXPIRY_TIME);
+                    jedis.expire(keyByte, cacheProperties.getExpirytime());
+                else jedis.expire(keyByte, MAX_EXPIRY_TIME);
             }
         }
     }
