@@ -11,6 +11,7 @@ import redis.clients.jedis.util.Pool;
 
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class RedisPoolCache extends AbstractRedisCache {
@@ -24,7 +25,7 @@ public class RedisPoolCache extends AbstractRedisCache {
         poolConfig.setMinIdle(cacheProperties.getRedis().getMinIdle());
         poolConfig.setMaxWait(Duration.ofMillis(cacheProperties.getRedis().getMaxWait()));
         if ("redis-sentinel".equals(cacheProperties.getExpirytype()))
-            this.pool = new JedisSentinelPool(cacheProperties.getRedis().getSentinel().getMasterName(), new HashSet<>(cacheProperties.getRedis().getSentinel().getNodes()), poolConfig, cacheProperties.getRedis().getTimeout(), cacheProperties.getRedis().getSentinel().getUser(), cacheProperties.getRedis().getPassword(), cacheProperties.getRedis().getDatabase());
+            this.pool = new JedisSentinelPool(Objects.requireNonNull(cacheProperties.getRedis().getSentinel().getMasterName()), new HashSet<>(cacheProperties.getRedis().getSentinel().getNodes()), poolConfig, cacheProperties.getRedis().getTimeout(), cacheProperties.getRedis().getSentinel().getUser(), cacheProperties.getRedis().getPassword(), cacheProperties.getRedis().getDatabase());
         else
             this.pool = new JedisPool(poolConfig, cacheProperties.getRedis().getHost(), cacheProperties.getRedis().getPort(), cacheProperties.getRedis().getTimeout(), cacheProperties.getRedis().getPassword(), cacheProperties.getRedis().getDatabase());
     }

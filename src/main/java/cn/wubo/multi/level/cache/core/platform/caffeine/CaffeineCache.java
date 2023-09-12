@@ -5,6 +5,7 @@ import cn.wubo.multi.level.cache.core.platform.AbstractRedisCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
@@ -16,8 +17,6 @@ public class CaffeineCache extends AbstractRedisCache {
         Caffeine<Object, Object> caffeine = Caffeine.newBuilder();
         if (cacheProperties.getCaffeine().getMaximumSize() > 0)
             caffeine.maximumSize(cacheProperties.getCaffeine().getMaximumSize());
-        if (cacheProperties.getCaffeine().getMaximumWeight() > 0)
-            caffeine.maximumWeight(cacheProperties.getCaffeine().getMaximumWeight());
         if (Boolean.TRUE.equals(cacheProperties.getCaffeine().getRecordStats())) caffeine.recordStats();
         switch (cacheProperties.getExpirytype()) {
             case "ttl":

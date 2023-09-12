@@ -28,6 +28,7 @@ public class CacheProperties {
 
     private RedisProperties redis = new RedisProperties();
 
+    // 多级缓存串联顺序，取缓存时先读取靠前的缓存
     private List<String> level;
 
     Boolean allowNullValues = Boolean.TRUE;
@@ -39,7 +40,9 @@ public class CacheProperties {
         // 基于缓存内的元素个数进行驱逐，设置为0L则不启用
         private Long maximumSize = 10_000L;
         // 基于缓存内元素权重进行驱逐，设置为0L则不启用
-        private Long maximumWeight = 0L;
+        //private Long maximumWeight = 0L;
+        // 权重计算类，使用权重驱逐必输
+        //private String weighter;
         // 是否开统计
         private Boolean recordStats = Boolean.FALSE;
     }
@@ -47,7 +50,7 @@ public class CacheProperties {
     @Data
     public class RedisProperties {
         // 单例地址
-        private String host;
+        private String host = "localhost";
         // 单例端口路
         private Integer port = 6379;
         // 密码
@@ -72,6 +75,7 @@ public class CacheProperties {
 
         @Data
         public class ClusterProperties {
+            // 集群节点，必输
             private List<String> nodes;
             // 出现异常最大重试次数
             private Integer maxAttempts = 5;
@@ -79,8 +83,11 @@ public class CacheProperties {
 
         @Data
         public class SentinelProperties {
+            // 烧饼节点，必输
             private List<String> nodes;
+            // 主节点名称，默认为空，必输
             private String masterName;
+            // 用户，默认为空
             private String user;
         }
     }
