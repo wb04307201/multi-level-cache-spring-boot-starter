@@ -1,15 +1,14 @@
 package cn.wubo.multi.level.cache.core.platform.caffeine;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
-import cn.wubo.multi.level.cache.core.platform.AbstractRedisCache;
+import cn.wubo.multi.level.cache.core.platform.AbstractCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
-public class CaffeineCache extends AbstractRedisCache {
+public class CaffeineCache extends AbstractCache {
     private final com.github.benmanes.caffeine.cache.Cache<Object, Object> cache;
 
     public CaffeineCache(CacheProperties cacheProperties) {
@@ -39,11 +38,6 @@ public class CaffeineCache extends AbstractRedisCache {
         Object value = cache.getIfPresent(key);
         getLog(key, value);
         return value;
-    }
-
-    @Override
-    public String getName() {
-        return cacheProperties.getCacheName();
     }
 
     @Override

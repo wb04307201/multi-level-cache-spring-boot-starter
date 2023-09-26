@@ -35,14 +35,11 @@ public class CacheProperties {
 
     @Data
     public class CaffeineProperties {
-        // 是否开启异步
-        //private Boolean async = Boolean.FALSE;
+        // 是否开启异步 private Boolean async = Boolean.FALSE;
         // 基于缓存内的元素个数进行驱逐，设置为0L则不启用
         private Long maximumSize = 10_000L;
-        // 基于缓存内元素权重进行驱逐，设置为0L则不启用
-        //private Long maximumWeight = 0L;
-        // 权重计算类，使用权重驱逐必输
-        //private String weighter;
+        // 基于缓存内元素权重进行驱逐，设置为0L则不启用 private Long maximumWeight = 0L;
+        // 权重计算类，使用权重驱逐必输 private String weighter;
         // 是否开统计
         private Boolean recordStats = Boolean.FALSE;
     }

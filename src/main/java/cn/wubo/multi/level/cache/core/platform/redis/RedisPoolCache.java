@@ -1,7 +1,7 @@
 package cn.wubo.multi.level.cache.core.platform.redis;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
-import cn.wubo.multi.level.cache.core.platform.AbstractRedisCache;
+import cn.wubo.multi.level.cache.core.platform.AbstractCache;
 import org.springframework.cache.Cache;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
-public class RedisPoolCache extends AbstractRedisCache {
+public class RedisPoolCache extends AbstractCache {
     private final Pool<Jedis> pool;
 
     public RedisPoolCache(CacheProperties cacheProperties) {

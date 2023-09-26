@@ -1,7 +1,7 @@
 package cn.wubo.multi.level.cache.core.platform.redis;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
-import cn.wubo.multi.level.cache.core.platform.AbstractRedisCache;
+import cn.wubo.multi.level.cache.core.platform.AbstractCache;
 import org.springframework.cache.Cache;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-public class JedisClusterCache extends AbstractRedisCache {
+public class JedisClusterCache extends AbstractCache {
 
     private final JedisCluster cluster;
 

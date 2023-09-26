@@ -1,7 +1,7 @@
 package cn.wubo.multi.level.cache.core.platform.level;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
-import cn.wubo.multi.level.cache.core.platform.AbstractRedisCache;
+import cn.wubo.multi.level.cache.core.platform.AbstractCache;
 import org.springframework.cache.Cache;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.ListIterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class LevelCache extends AbstractRedisCache {
+public class LevelCache extends AbstractCache {
 
     private final CopyOnWriteArrayList<Cache> caches;
 
@@ -29,16 +29,10 @@ public class LevelCache extends AbstractRedisCache {
             if (result != null) value = result.get();
             if (value != null) break;
         }
-        for (int i = num < this.caches.size() ? num - 1 : -1; i >= 0; i--) {
+        for (int i = num < this.caches.size() ? num - 1 : -1; i >= 0; i--)
             caches.get(i).put(key, value);
-        }
         getLog(key, value);
         return value;
-    }
-
-    @Override
-    public String getName() {
-        return cacheProperties.getCacheName();
     }
 
     @Override

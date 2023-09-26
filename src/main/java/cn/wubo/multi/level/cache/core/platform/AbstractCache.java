@@ -1,6 +1,7 @@
 package cn.wubo.multi.level.cache.core.platform;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
+import cn.wubo.multi.level.cache.exception.CacheRutimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
@@ -11,7 +12,7 @@ import java.io.*;
 import java.util.concurrent.Callable;
 
 @Slf4j
-public abstract class AbstractRedisCache extends AbstractValueAdaptingCache {
+public abstract class AbstractCache extends AbstractValueAdaptingCache {
     protected final CacheProperties cacheProperties;
 
     protected static final Long MAX_EXPIRY_TIME = 3153600000L;
@@ -22,7 +23,7 @@ public abstract class AbstractRedisCache extends AbstractValueAdaptingCache {
      * @param allowNullValues whether to allow for {@code null} values
      * @param cacheProperties
      */
-    protected AbstractRedisCache(boolean allowNullValues, CacheProperties cacheProperties) {
+    protected AbstractCache(boolean allowNullValues, CacheProperties cacheProperties) {
         super(allowNullValues);
         this.cacheProperties = cacheProperties;
         log.debug("初始化缓存 缓存名：{} 缓存类型：{} 缓存方式：{} 缓存时间：{}", getName(), cacheProperties.getCachetype(), cacheProperties.getExpirytype(), cacheProperties.getExpirytime());
@@ -58,7 +59,7 @@ public abstract class AbstractRedisCache extends AbstractValueAdaptingCache {
             objectOutputStream.writeObject(object);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new CacheRutimeException(e.getMessage(), e);
         }
     }
 
@@ -66,7 +67,7 @@ public abstract class AbstractRedisCache extends AbstractValueAdaptingCache {
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(binaryByte); ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new CacheRutimeException(e.getMessage(), e);
         }
     }
 
