@@ -11,6 +11,12 @@ public class CacheFactory {
     private CacheFactory() {
     }
 
+    /**
+     * 根据给定的缓存属性构建缓存对象
+     *
+     * @param cacheProperties 缓存属性对象
+     * @return 缓存对象
+     */
     public static Cache build(CacheProperties cacheProperties) {
         if ("caffeine".equals(cacheProperties.getCachetype())) {
             return new CaffeineCache(cacheProperties);
@@ -22,4 +28,5 @@ public class CacheFactory {
             throw new IllegalArgumentException("不能识别的缓存类型~");
         }
     }
+
 }
