@@ -2,10 +2,11 @@ package cn.wubo.multi.level.cache.core.platform.redis;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
 import cn.wubo.multi.level.cache.core.platform.AbstractCache;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.cache.Cache;
+import redis.clients.jedis.Connection;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisPoolConfig;
 
 import java.time.Duration;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class JedisClusterCache extends AbstractCache {
 
     public JedisClusterCache(CacheProperties cacheProperties) {
         super(cacheProperties.getAllowNullValues(), cacheProperties);
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        GenericObjectPoolConfig<Connection> poolConfig = new GenericObjectPoolConfig<>();
         poolConfig.setMaxTotal(cacheProperties.getRedis().getMaxTotal());
         poolConfig.setMaxIdle(cacheProperties.getRedis().getMaxIdle());
         poolConfig.setMinIdle(cacheProperties.getRedis().getMinIdle());
@@ -57,12 +58,10 @@ public class JedisClusterCache extends AbstractCache {
         return value;
     }
 
-
     @Override
     public Object getNativeCache() {
         return cluster;
     }
-
 
     /**
      * 根据指定的键获取值。
@@ -86,7 +85,6 @@ public class JedisClusterCache extends AbstractCache {
             return value;
         }
     }
-
 
     @Override
     public void put(Object key, Object value) {
@@ -113,7 +111,6 @@ public class JedisClusterCache extends AbstractCache {
         }
     }
 
-
     /**
      * 覆盖父类方法，驱逐指定键的元素。
      *
@@ -123,7 +120,6 @@ public class JedisClusterCache extends AbstractCache {
     public void evict(Object key) {
         cluster.del(getKey(key));
     }
-
 
     /**
      * 清空缓存

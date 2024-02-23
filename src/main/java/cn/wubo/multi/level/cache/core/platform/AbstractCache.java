@@ -38,6 +38,12 @@ public abstract class AbstractCache extends AbstractValueAdaptingCache {
         return getName().concat(":").concat(key.toString());
     }
 
+    /**
+     * 在缓存值之前进行预处理。
+     *
+     * @param value 要预处理的值
+     * @return 预处理后的值
+     */
     protected Object preProcessCacheValue(@Nullable Object value) {
         if (value != null) {
             return value;
@@ -46,6 +52,14 @@ public abstract class AbstractCache extends AbstractValueAdaptingCache {
         }
     }
 
+    /**
+     * 从加载器中获取值
+     *
+     * @param key   键
+     * @param valueLoader   加载器，用于获取值
+     * @return      返回加载器获取到的值
+     * @throws Cache.ValueRetrievalException   如果获取值时发生异常
+     */
     protected <T> T valueFromLoader(Object key, Callable<T> valueLoader) {
         try {
             return valueLoader.call();
@@ -54,6 +68,13 @@ public abstract class AbstractCache extends AbstractValueAdaptingCache {
         }
     }
 
+    /**
+     * 序列化对象为字节数组
+     *
+     * @param object 要序列化的对象
+     * @return 序列化后的字节数组
+     * @throws CacheRutimeException 序列化过程中出现异常时抛出
+     */
     protected byte[] serialize(Object object) {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
             objectOutputStream.writeObject(object);
@@ -63,8 +84,16 @@ public abstract class AbstractCache extends AbstractValueAdaptingCache {
         }
     }
 
+    /**
+     * 反序列化二进制字节数组为对象
+     *
+     * @param binaryByte 二进制字节数组
+     * @return 反序列化后的对象
+     * @throws CacheRutimeException 反序列化过程中出现异常时抛出
+     */
     protected Object deserializer(byte[] binaryByte) {
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(binaryByte); ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(binaryByte);
+             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new CacheRutimeException(e.getMessage(), e);

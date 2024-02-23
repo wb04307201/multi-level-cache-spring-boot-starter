@@ -51,7 +51,6 @@ public class RedisPoolCache extends AbstractCache {
         }
     }
 
-
     @Override
     public Object getNativeCache() {
         return this.pool;
@@ -81,7 +80,6 @@ public class RedisPoolCache extends AbstractCache {
         }
     }
 
-
     @Override
     public void put(Object key, Object value) {
         // 获取key的字符串形式
@@ -109,7 +107,6 @@ public class RedisPoolCache extends AbstractCache {
         }
     }
 
-
     @Override
     public void evict(Object key) {
         // 使用Jedis对象获取Redis资源
@@ -118,7 +115,6 @@ public class RedisPoolCache extends AbstractCache {
             jedis.del(getKey(key));
         }
     }
-
 
     /**
      * 清空缓存数据
@@ -130,5 +126,4 @@ public class RedisPoolCache extends AbstractCache {
             jedis.del(jedis.keys(cacheProperties.getCacheName().concat(":").concat("*")).toArray(new String[0]));
         }
     }
-
 }

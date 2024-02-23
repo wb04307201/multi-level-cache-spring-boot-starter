@@ -63,7 +63,6 @@ public class LevelCache extends AbstractCache {
         }
     }
 
-
     /**
      * 覆写父类的put方法，用于向缓存中添加键值对
      */
@@ -85,7 +84,6 @@ public class LevelCache extends AbstractCache {
         }
     }
 
-
     /**
      * 重写方法，用于将指定键从所有缓存中删除。
      *
@@ -104,5 +102,4 @@ public class LevelCache extends AbstractCache {
     public void clear() {
         caches.forEach(Cache::clear);
     }
-
 }

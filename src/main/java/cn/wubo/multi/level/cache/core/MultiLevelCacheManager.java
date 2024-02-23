@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 
 public class MultiLevelCacheManager implements CacheManager {
@@ -25,7 +24,7 @@ public class MultiLevelCacheManager implements CacheManager {
             if ("multilevel".equals(cache.getCachetype())) list.add(cache);
             else caches.put(cache.getCacheName(), Objects.requireNonNull(CacheFactory.build(cache)));
         });
-        list.stream().forEach(cache -> caches.put(cache.getCacheName(), new LevelCache(cache, cache.getLevel().stream().map(name -> caches.get(name)).collect(Collectors.toList()))));
+        list.stream().forEach(cache -> caches.put(cache.getCacheName(), new LevelCache(cache, cache.getLevel().stream().map(name -> caches.get(name)).toList())));
     }
 
     @Override

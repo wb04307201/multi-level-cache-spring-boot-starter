@@ -4,6 +4,7 @@ import cn.wubo.multi.level.cache.config.CacheProperties;
 import cn.wubo.multi.level.cache.core.platform.caffeine.CaffeineCache;
 import cn.wubo.multi.level.cache.core.platform.redis.JedisClusterCache;
 import cn.wubo.multi.level.cache.core.platform.redis.RedisPoolCache;
+import cn.wubo.multi.level.cache.exception.CacheRutimeException;
 import org.springframework.cache.Cache;
 
 public class CacheFactory {
@@ -25,7 +26,7 @@ public class CacheFactory {
         } else if ("redis".equals(cacheProperties.getCachetype()) || "redis-sentinel".equals(cacheProperties.getCachetype())) {
             return new RedisPoolCache(cacheProperties);
         } else {
-            throw new IllegalArgumentException("不能识别的缓存类型~");
+            throw new CacheRutimeException("不能识别的缓存类型~");
         }
     }
 

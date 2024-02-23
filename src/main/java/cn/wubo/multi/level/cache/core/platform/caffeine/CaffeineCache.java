@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 import java.util.function.Function;
 
 public class CaffeineCache extends AbstractCache {
+
     private final com.github.benmanes.caffeine.cache.Cache<Object, Object> cache;
 
     public CaffeineCache(CacheProperties cacheProperties) {
@@ -44,7 +45,6 @@ public class CaffeineCache extends AbstractCache {
         return value;
     }
 
-
     @Override
     public Object getNativeCache() {
         return cache;
@@ -65,7 +65,6 @@ public class CaffeineCache extends AbstractCache {
         return (T) this.fromStoreValue(cache.get(key, new LoadFunction(valueLoader)));
     }
 
-
     /**
      * 覆写父类的put方法，
      * 将key和value存入缓存中，
@@ -81,7 +80,6 @@ public class CaffeineCache extends AbstractCache {
         cache.put(key, toStoreValue(value));
     }
 
-
     /**
      * 覆盖方法，从缓存中删除指定键的值
      */
@@ -90,7 +88,6 @@ public class CaffeineCache extends AbstractCache {
         cache.invalidate(key);
     }
 
-
     /**
      * 清空缓存，使所有缓存项失效
      */
@@ -98,7 +95,6 @@ public class CaffeineCache extends AbstractCache {
     public void clear() {
         cache.invalidateAll();
     }
-
 
     private class LoadFunction implements Function<Object, Object> {
         private final Callable<?> valueLoader;
@@ -121,6 +117,5 @@ public class CaffeineCache extends AbstractCache {
                 throw new org.springframework.cache.Cache.ValueRetrievalException(o, this.valueLoader, var3);
             }
         }
-
     }
 }
