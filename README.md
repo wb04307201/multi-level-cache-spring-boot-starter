@@ -20,17 +20,16 @@
 ```
 
 ## 第二步 引入jar
-
+1.1.0版本后升级到jdk17 SpringBoot3+
 ```xml
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>multi-level-cache-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 ## 第三步 在启动类上加上`@EnableMultiLevelCache`注解
-
 ```java
 @EnableMultiLevelCache
 @SpringBootApplication
@@ -44,7 +43,6 @@ public class MultiLevelCacheDemoApplication {
 ```
 
 ## 第四步 `application.yml`配置文件中添加以下相关配置，可以配置多个缓存然后形成多级缓存使用
-
 ```yaml
 multi:
   level:
@@ -136,7 +134,6 @@ multi:
 ```
 
 ## 第五步 通过注解使用缓存
-
 ```java
 @Service
 public class TestService {
