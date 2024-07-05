@@ -9,8 +9,15 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({MultiLevelCacheProperties.class})
 public class MultiLevelCacheConfiguration {
 
+    /**
+     * 创建并返回一个 MultiLevelCacheManager 实例
+     *
+     * @param multiLevelCacheProperties 多级缓存属性
+     * @return MultiLevelCacheManager 实例
+     */
     @Bean("multiLevelCacheManager")
     public MultiLevelCacheManager multiLevelCacheManager(MultiLevelCacheProperties multiLevelCacheProperties) {
         return new MultiLevelCacheManager(multiLevelCacheProperties);
     }
+
 }
