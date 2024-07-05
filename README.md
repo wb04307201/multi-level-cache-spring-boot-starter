@@ -1,16 +1,16 @@
 # multi-level-cache-spring-boot-starter
 
 [![](https://jitpack.io/v/com.gitee.wb04307201/multi-level-cache-spring-boot-starter.svg)](https://jitpack.io/#com.gitee.wb04307201/multi-level-cache-spring-boot-starter)  
-![MIT](https://img.shields.io/badge/License-Apache2.0-blue.svg) ![JDK](https://img.shields.io/badge/JDK-8+-green.svg) ![SpringBoot](https://img.shields.io/badge/Srping%20Boot-2+-green.svg)
+![MIT](https://img.shields.io/badge/License-Apache2.0-blue.svg) ![JDK](https://img.shields.io/badge/JDK-17+-green.svg) ![SpringBoot](https://img.shields.io/badge/Srping%20Boot-3+-green.svg)
 
-> 这是一个缓存适配器  
+> 这是一个多级缓存适配器  
 > 可配置多个caffeine本地缓存和redis缓存服务，并可以串联多个缓存配置形成多级缓存  
 > 与spring-cache相结合，支持@Caching、@Cacheable、@CacahePut、@CacheEvict等注解的使用
 
 ## 支持的缓存类型
 - caffeine
 - redis
-- 
+-
 ## 适合的场景
 - 需要切换缓存中间件时，可以做到无缝切换，不需要修改业务代码；
 
@@ -27,12 +27,12 @@
     </repository>
 </repositories>
 ```
-
+1.1.0版本后升级到jdk17 SpringBoot3+
 ```xml
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>multi-level-cache-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
