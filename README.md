@@ -1,6 +1,10 @@
 # multi-level-cache-spring-boot-starter
 
-[![](https://jitpack.io/v/com.gitee.wb04307201/multi-level-cache-spring-boot-starter.svg)](https://jitpack.io/#com.gitee.wb04307201/multi-level-cache-spring-boot-starter)  
+[![](https://jitpack.io/v/com.gitee.wb04307201/multi-level-cache-spring-boot-starter.svg)](https://jitpack.io/#com.gitee.wb04307201/multi-level-cache-spring-boot-starter)
+[![star](https://gitee.com/wb04307201/multi-level-cache-spring-boot-starter/badge/star.svg?theme=dark)](https://gitee.com/wb04307201/multi-level-cache-spring-boot-starter)
+[![fork](https://gitee.com/wb04307201/multi-level-cache-spring-boot-starter/badge/fork.svg?theme=dark)](https://gitee.com/wb04307201/multi-level-cache-spring-boot-starter)
+[![star](https://img.shields.io/github/stars/wb04307201/multi-level-cache-spring-boot-starter)](https://github.com/wb04307201/multi-level-cache-spring-boot-starter)
+[![fork](https://img.shields.io/github/forks/wb04307201/multi-level-cache-spring-boot-starter)](https://github.com/wb04307201/multi-level-cache-spring-boot-starter)  
 ![MIT](https://img.shields.io/badge/License-Apache2.0-blue.svg) ![JDK](https://img.shields.io/badge/JDK-17+-green.svg) ![SpringBoot](https://img.shields.io/badge/Srping%20Boot-3+-green.svg)
 
 > 这是一个多级缓存适配器  
