@@ -2,7 +2,7 @@ package cn.wubo.multi.level.cache.core.platform;
 
 import cn.wubo.multi.level.cache.config.CacheProperties;
 import cn.wubo.multi.level.cache.core.platform.caffeine.CaffeineCache;
-import cn.wubo.multi.level.cache.core.platform.redis.JedisClusterCache;
+import cn.wubo.multi.level.cache.core.platform.redis.RedisClusterCache;
 import cn.wubo.multi.level.cache.core.platform.redis.RedisPoolCache;
 import cn.wubo.multi.level.cache.exception.CacheRutimeException;
 import org.springframework.cache.Cache;
@@ -22,7 +22,7 @@ public class CacheFactory {
         if ("caffeine".equals(cacheProperties.getCachetype())) {
             return new CaffeineCache(cacheProperties);
         } else if ("redis-cluster".equals(cacheProperties.getCachetype())) {
-            return new JedisClusterCache(cacheProperties);
+            return new RedisClusterCache(cacheProperties);
         } else if ("redis".equals(cacheProperties.getCachetype()) || "redis-sentinel".equals(cacheProperties.getCachetype())) {
             return new RedisPoolCache(cacheProperties);
         } else {

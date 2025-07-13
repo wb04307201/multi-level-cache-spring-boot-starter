@@ -7,22 +7,14 @@
 [![fork](https://img.shields.io/github/forks/wb04307201/multi-level-cache-spring-boot-starter)](https://github.com/wb04307201/multi-level-cache-spring-boot-starter)  
 ![MIT](https://img.shields.io/badge/License-Apache2.0-blue.svg) ![JDK](https://img.shields.io/badge/JDK-17+-green.svg) ![SpringBoot](https://img.shields.io/badge/Srping%20Boot-3+-green.svg)
 
-> 这是一个多级缓存适配器  
-> 可配置多个caffeine本地缓存和redis缓存服务，并可以串联多个缓存配置形成多级缓存  
-> 与spring-cache相结合，支持@Caching、@Cacheable、@CacahePut、@CacheEvict等注解的使用
+> 注解搞定多级缓存  
+> 可配置多个caffeine本地缓存和redis缓存服务，并通过配置形成多级缓存  
+> 并与spring-cache结合，支持@Caching、@Cacheable、@CacahePut、@CacheEvict注解的使用
 
-## 支持的缓存类型
-- caffeine
-- redis
--
-## 适合的场景
-- 需要切换缓存中间件时，可以做到无缝切换，不需要修改业务代码；
+## 代码示例
+. 使用[多级缓存注解](https://gitee.com/wb04307201/multi-level-cache-spring-boot-starter)实现的[多级缓存Demo](https://gitee.com/wb04307201/multi-level-cache-demo)
 
-## [代码示例](https://gitee.com/wb04307201/multi-level-cache-demo)
-
-## 快速开始
-### 引入依赖
-增加 JitPack 仓库
+## 第一步 增加 JitPack 仓库
 ```xml
 <repositories>
     <repository>
@@ -31,16 +23,17 @@
     </repository>
 </repositories>
 ```
+## 第二步 引入jar
 1.1.0版本后升级到jdk17 SpringBoot3+
 ```xml
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>multi-level-cache-spring-boot-starter</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
-### 在启动类上加上`@EnableMultiLevelCache`注解
+## 第三步 在启动类上加上`@EnableMultiLevelCache`注解
 ```java
 @EnableMultiLevelCache
 @SpringBootApplication
@@ -53,7 +46,7 @@ public class MultiLevelCacheDemoApplication {
 }
 ```
 
-### `application.yml`配置文件中添加以下相关配置，可以配置多个缓存然后形成多级缓存使用
+## 第四步 在`application.yml`配置文件中添加以下相关配置，可以配置多个缓存然后形成多级缓存使用
 ```yaml
 multi:
   level:

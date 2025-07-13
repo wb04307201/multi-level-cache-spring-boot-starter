@@ -13,11 +13,11 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-public class JedisClusterCache extends AbstractCache {
+public class RedisClusterCache extends AbstractCache {
 
     private final JedisCluster cluster;
 
-    public JedisClusterCache(CacheProperties cacheProperties) {
+    public RedisClusterCache(CacheProperties cacheProperties) {
         super(cacheProperties.getAllowNullValues(), cacheProperties);
         GenericObjectPoolConfig<Connection> poolConfig = new GenericObjectPoolConfig<>();
         poolConfig.setMaxTotal(cacheProperties.getRedis().getMaxTotal());
