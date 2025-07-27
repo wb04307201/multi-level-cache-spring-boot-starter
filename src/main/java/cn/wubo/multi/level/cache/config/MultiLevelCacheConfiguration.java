@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({MultiLevelCacheProperties.class})
 public class MultiLevelCacheConfiguration {
 
-    /**
+        /**
      * 创建并返回一个 MultiLevelCacheManager 实例
      *
      * @param multiLevelCacheProperties 多级缓存属性
@@ -17,7 +17,16 @@ public class MultiLevelCacheConfiguration {
      */
     @Bean("multiLevelCacheManager")
     public MultiLevelCacheManager multiLevelCacheManager(MultiLevelCacheProperties multiLevelCacheProperties) {
-        return new MultiLevelCacheManager(multiLevelCacheProperties);
+        if (multiLevelCacheProperties == null) {
+            throw new IllegalArgumentException("multiLevelCacheProperties cannot be null");
+        }
+
+        try {
+            return new MultiLevelCacheManager(multiLevelCacheProperties);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create MultiLevelCacheManager", e);
+        }
     }
+
 
 }
